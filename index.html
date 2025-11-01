@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una Flor para Ti 💖</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        /* Partículas de fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Contenedor principal */
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* Mensaje de amor */
+        .love-message {
+            margin-bottom: 40px;
+            animation: fadeIn 2s ease;
+        }
+
+        .message-text {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .heart {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .sub-message {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 105, 180, 0.8); }
+            to { text-shadow: 0 0 30px rgba(255, 20, 147, 0.9), 0 0 40px rgba(255, 105, 180, 0.6); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Contenedor de la flor */
+        .flower-container {
+            position: relative;
+            margin: 50px auto;
+            width: 200px;
+            height: 300px;
+        }
+
+        /* Flor mágica */
+        .flower {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        /* Pétalos */
+        .petals {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .petal {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b8b, #ff8e53);
+            border-radius: 50%;
+            transform-origin: bottom center;
+            animation: petalGlow 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 107, 139, 0.5);
+        }
+
+        .petal::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 5px;
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff4775, #ff6b35);
+            border-radius: 50%;
+            filter: blur(5px);
+        }
+
+        .p1 { transform: rotate(0deg); animation-delay: 0s; }
+        .p2 { transform: rotate(45deg); animation-delay: 0.2s; }
+        .p3 { transform: rotate(90deg); animation-delay: 0.4s; }
+        .p4 { transform: rotate(135deg); animation-delay: 0.6s; }
+        .p5 { transform: rotate(180deg); animation-delay: 0.8s; }
+        .p6 { transform: rotate(225deg); animation-delay: 1.0s; }
+        .p7 { transform: rotate(270deg); animation-delay: 1.2s; }
+        .p8 { transform: rotate(315deg); animation-delay: 1.4s; }
+
+        @keyframes petalGlow {
+            0%, 100% { 
+                transform: rotate(var(--rot, 0deg)) scale(1);
+                box-shadow: 0 0 20px rgba(255, 107, 139, 0.5);
+            }
+            50% { 
+                transform: rotate(var(--rot, 0deg)) scale(1.1);
+                box-shadow: 0 0 30px rgba(255, 107, 139, 0.8), 0 0 40px rgba(255, 20, 147, 0.6);
+            }
+        }
+
+        /* Centro de la flor */
+        .flower-center {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ffd700, #ff6b00);
+            border-radius: 50%;
+            z-index: 10;
+            animation: centerPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+        }
+
+        .center-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes centerPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Tallo y hojas */
+        .stem {
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 120px;
+            background: linear-gradient(to bottom, #2e8b57, #228b22);
+            border-radius: 4px;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 25px;
+            height: 15px;
+            background: linear-gradient(45deg, #32cd32, #228b22);
+            border-radius: 50% 0 50% 0;
+            animation: leafSway 3s ease-in-out infinite;
+        }
+
+        .leaf1 {
+            top: 180px;
+            left: calc(50% - 20px);
+            transform: rotate(-30deg);
+        }
+
+        .leaf2 {
+            top: 200px;
+            left: calc(50% + 10px);
+            transform: rotate(30deg);
+            animation-delay: 1.5s;
+        }
+
+        @keyframes leafSway {
+            0%, 100% { transform: rotate(var(--rot, -30deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rot, -30deg) + 10deg)) scale(1.05); }
+        }
+
+        /* Efecto de brillo */
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+            border-radius: 50%;
+            animation: glowRotate 8s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes glowRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Rayo de luz */
+        .light-beam {
+            position: fixed;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: lightBeam 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes lightBeam {
+            0%, 100% { top: -100%; opacity: 0; }
+            50% { top: 100%; opacity: 0.5; }
+        }
+
+        /* Chispas */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkleFloat 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+            50% { 
+                transform: translate(var(--tx, 0), var(--ty, -50px)) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Botones */
+        .actions {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .btn-surprise {
+            background: linear-gradient(45deg, #FF6B8B, #FF8E53);
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.4);
+        }
+
+        .btn-surprise:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 139, 0.6);
+        }
+
+        /* Mensaje secreto */
+        .secret-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: messageAppear 0.5s ease;
+        }
+
+        .secret-message.show {
+            display: flex;
+        }
+
+        .message-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: boxPop 0.5s ease;
+        }
+
+        .message-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .message-box p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .hearts-fall {
+            font-size: 1.5rem;
+            animation: heartsFall 2s ease-in-out infinite;
+        }
+
+        @keyframes messageAppear {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes boxPop {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes heartsFall {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .message-text {
+                font-size: 2rem;
+            }
+            
+            .flower-container {
+                transform: scale(0.8);
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Efecto de carga inicial */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Animaciones para confirmaciones */
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(0); opacity: 1; }
+            to { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+        }
+
+        /* Animación para explosión de corazones */
+        @keyframes heartExplode {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--end-x), var(--end-y)) rotate(var(--rotate)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo con partículas -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Mensaje de amor -->
+        <div class="love-message">
+            <h1 class="message-text">PARA TI MI AMOR YOMI <span class="heart">💖</span></h1>
+            <p class="sub-message">Esta flor es solo para ti mi amor yomi</p>
+        </div>
+
+        <!-- Flor animada -->
+        <div class="flower-container">
+            <div class="flower" id="magicFlower">
+                <!-- Pétalos -->
+                <div class="petals">
+                    <div class="petal p1"></div>
+                    <div class="petal p2"></div>
+                    <div class="petal p3"></div>
+                    <div class="petal p4"></div>
+                    <div class="petal p5"></div>
+                    <div class="petal p6"></div>
+                    <div class="petal p7"></div>
+                    <div class="petal p8"></div>
+                </div>
+                
+                <!-- Centro de la flor -->
+                <div class="flower-center">
+                    <div class="center-glow"></div>
+                </div>
+                
+                <!-- Tallo y hojas -->
+                <div class="stem"></div>
+                <div class="leaf leaf1"></div>
+                <div class="leaf leaf2"></div>
+            </div>
+            
+            <!-- Efecto de brillo -->
+            <div class="glow-effect"></div>
+        </div>
+
+        <!-- Efectos de luz -->
+        <div class="light-beam"></div>
+        <div class="sparkles" id="sparkles"></div>
+
+        <!-- Botones de acción -->
+        <div class="actions">
+            <button class="btn btn-whatsapp" id="shareBtn">
+                <i class="fab fa-whatsapp"></i>
+                Compartir por WhatsApp
+            </button>
+            
+            <button class="btn btn-surprise" id="surpriseBtn">
+                <i class="fas fa-magic"></i>
+                Sorpresa Especial
+            </button>
+        </div>
+
+        <!-- Mensaje secreto que aparece -->
+        <div class="secret-message" id="secretMessage">
+            <div class="message-box">
+                <h3>Eres la persona más importante en mi vida MI YOMI</h3>
+                <p>No hace falta nada más, solo pasar tiempo contigo ya me hace bien</p>
+                <div class="hearts-fall">💖💖💖</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio para efectos (opcional) -->
+    <audio id="magicSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-sound-3090.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Inicialización cuando la página carga
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página cargada, iniciando animaciones...');
+            
+            // Verificar que los elementos existan antes de usarlos
+            if (document.getElementById('particles')) {
+                createParticles();
+            } else {
+                console.error('Elemento particles no encontrado');
+            }
+            
+            // Crear chispas iniciales
+            createSparkles();
+            
+            // Configurar event listeners
+            setupEventListeners();
+            
+            // Efecto de entrada
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Crear partículas de fondo
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) {
+                console.error('No se encontró el contenedor de partículas');
+                return;
+            }
+            
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Posición y tamaño aleatorio
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 3;
+                
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${posX}%;
+                    top: ${posY}%;
+                    animation-delay: ${delay}s;
+                    animation-duration: ${duration}s;
+                `;
+                
+                particlesContainer.appendChild(particle);
+            }
+            console.log('Partículas creadas:', particleCount);
+        }
+
+        // Crear chispas mágicas
+        function createSparkles() {
+            const sparklesContainer = document.getElementById('sparkles');
+            if (!sparklesContainer) {
+                console.log('Creando contenedor de chispas...');
+                const newSparklesContainer = document.createElement('div');
+                newSparklesContainer.id = 'sparkles';
+                newSparklesContainer.className = 'sparkles';
+                document.body.appendChild(newSparklesContainer);
+            }
+            
+            setInterval(() => {
+                const container = document.getElementById('sparkles');
+                if (container && container.children.length < 20) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    
+                    const startX = Math.random() * 100;
+                    const moveX = (Math.random() - 0.5) * 100;
+                    const moveY = -(Math.random() * 100 + 50);
+                    const delay = Math.random() * 2;
+                    const duration = Math.random() * 2 + 2;
+                    
+                    sparkle.style.cssText = `
+                        left: ${startX}%;
+                        bottom: 0;
+                        --tx: ${moveX}px;
+                        --ty: ${moveY}px;
+                        animation-delay: ${delay}s;
+                        animation-duration: ${duration}s;
+                    `;
+                    
+                    container.appendChild(sparkle);
+                    
+                    // Remover después de la animación
+                    setTimeout(() => {
+                        if (sparkle.parentNode) {
+                            sparkle.remove();
+                        }
+                    }, (delay + duration) * 1000);
+                }
+            }, 300);
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            console.log('Configurando event listeners...');
+            
+            // Botón de WhatsApp
+            const shareBtn = document.getElementById('shareBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', shareOnWhatsApp);
+            }
+            
+            // Botón de sorpresa
+            const surpriseBtn = document.getElementById('surpriseBtn');
+            if (surpriseBtn) {
+                surpriseBtn.addEventListener('click', showSurprise);
+            }
+            
+            // Cerrar mensaje secreto al hacer clic
+            const secretMessage = document.getElementById('secretMessage');
+            if (secretMessage) {
+                secretMessage.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Efecto al pasar el mouse sobre la flor
+            const flower = document.getElementById('magicFlower');
+            if (flower) {
+                flower.addEventListener('mouseenter', enhanceFlower);
+                flower.addEventListener('mouseleave', normalizeFlower);
+            }
+            
+            console.log('Event listeners configurados correctamente');
+        }
+
+        // Compartir por WhatsApp
+        function shareOnWhatsApp() {
+            const text = "💖 Te he enviado una flor especial solo para ti. Ábrela aquí: ";
+            const url = window.location.href;
+            const message = encodeURIComponent(text + url);
+            
+            // Intentar abrir WhatsApp Web en desktop o app en móvil
+            if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                window.open(`whatsapp://send?text=${message}`, '_blank');
+            } else {
+                window.open(`https://web.whatsapp.com/send?text=${message}`, '_blank');
+            }
+            
+            // Efecto visual de confirmación
+            showConfirmation('¡Enlace copiado para WhatsApp!');
+        }
+
+        // Mostrar sorpresa especial
+        function showSurprise() {
+            const secretMessage = document.getElementById('secretMessage');
+            const magicSound = document.getElementById('magicSound');
+            
+            // Reproducir sonido mágico si está disponible
+            if (magicSound) {
+                magicSound.currentTime = 0;
+                magicSound.play().catch(e => console.log('Audio no disponible'));
+            }
+            
+            // Efecto de explosión de corazones
+            createHeartExplosion();
+            
+            // Mostrar mensaje secreto
+            if (secretMessage) {
+                secretMessage.classList.add('show');
+            }
+            
+            // Efecto especial en la flor
+            enhanceFlower();
+            
+            // Ocultar mensaje después de 5 segundos
+            setTimeout(() => {
+                if (secretMessage) {
+                    secretMessage.classList.remove('show');
+                }
+                normalizeFlower();
+            }, 5000);
+        }
+
+        // Mejorar la flor (efecto especial)
+        function enhanceFlower() {
+            const flower = document.getElementById('magicFlower');
+            if (!flower) return;
+            
+            const petals = flower.querySelectorAll('.petal');
+            
+            // Aumentar brillo y tamaño
+            flower.style.transform = 'scale(1.1)';
+            flower.style.filter = 'brightness(1.3)';
+            
+            // Efecto en pétalos
+            petals.forEach(petal => {
+                petal.style.animationDuration = '1s';
+                petal.style.boxShadow = '0 0 40px rgba(255, 107, 139, 0.9)';
+            });
+            
+            // Crear partículas adicionales
+            createMagicParticles();
+        }
+
+        // Normalizar la flor
+        function normalizeFlower() {
+            const flower = document.getElementById('magicFlower');
+            if (!flower) return;
+            
+            const petals = flower.querySelectorAll('.petal');
+            
+            flower.style.transform = '';
+            flower.style.filter = '';
+            
+            petals.forEach(petal => {
+                petal.style.animationDuration = '';
+                petal.style.boxShadow = '';
+            });
+        }
+
+        // Crear explosión de corazones
+        function createHeartExplosion() {
+            const container = document.querySelector('.container');
+            if (!container) return;
+            
+            const heartCount = 20;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.style.cssText = `
+                    position: fixed;
+                    font-size: ${Math.random() * 20 + 15}px;
+                    left: 50%;
+                    top: 50%;
+                    z-index: 100;
+                    pointer-events: none;
+                    animation: heartExplode 1.5s ease-out forwards;
+                `;
+                
+                // Propiedades aleatorias para la animación
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 100;
+                const rotate = Math.random() * 360;
+                
+                heart.style.setProperty('--end-x', Math.cos(angle) * distance + 'px');
+                heart.style.setProperty('--end-y', Math.sin(angle) * distance + 'px');
+                heart.style.setProperty('--rotate', rotate + 'deg');
+                
+                container.appendChild(heart);
+                
+                // Remover después de la animación
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.remove();
+                    }
+                }, 1500);
+            }
+        }
+
+        // Crear partículas mágicas adicionales
+        function createMagicParticles() {
+            const flower = document.getElementById('magicFlower');
+            if (!flower) return;
+            
+            const rect = flower.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'sparkle';
+                particle.style.background = getRandomColor();
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 100 + 50;
+                const size = Math.random() * 6 + 3;
+                
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${centerX}px;
+                    top: ${centerY}px;
+                    --tx: ${Math.cos(angle) * distance}px;
+                    --ty: ${Math.sin(angle) * distance}px;
+                    animation-duration: ${Math.random() * 1 + 1}s;
+                `;
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 2000);
+            }
+        }
+
+        // Mostrar confirmación
+        function showConfirmation(message) {
+            const confirmation = document.createElement('div');
+            confirmation.textContent = message;
+            confirmation.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(255, 255, 255, 0.9);
+                color: #333;
+                padding: 10px 20px;
+                border-radius: 25px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideDown 0.3s ease;
+            `;
+            
+            document.body.appendChild(confirmation);
+            
+            setTimeout(() => {
+                confirmation.style.animation = 'slideUp 0.3s ease';
+                setTimeout(() => {
+                    if (confirmation.parentNode) {
+                        confirmation.remove();
+                    }
+                }, 300);
+            }, 2000);
+        }
+
+        // Generar color aleatorio para partículas
+        function getRandomColor() {
+            const colors = [
+                '#FF6B8B', '#FF8E53', '#FFD166', '#06D6A0', 
+                '#118AB2', '#073B4C', '#EF476F', '#FFD166'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Efecto de carga inicial
+        window.addEventListener('load', function() {
+            const loading = document.createElement('div');
+            loading.className = 'loading';
+            loading.innerHTML = '<div class="loading-spinner"></div>';
+            document.body.appendChild(loading);
+            
+            setTimeout(() => {
+                loading.style.opacity = '0';
+                setTimeout(() => {
+                    if (loading.parentNode) {
+                        loading.remove();
+                    }
+                }, 500);
+            }, 1000);
+        });
+
+        // Efecto de parallax en el scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            const flowerContainer = document.querySelector('.flower-container');
+            if (flowerContainer) {
+                flowerContainer.style.transform = 
+                    `translateY(${rate}px) scale(${1 - scrolled * 0.001})`;
+            }
+        });
+
+        // Detectar si es móvil para optimizaciones
+        if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.body.classList.add('mobile');
+            
+            // Optimizar para móvil
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                if (Math.random() > 0.7) particle.remove();
+            });
+        }
+    </script>
+</body>
+</html>
